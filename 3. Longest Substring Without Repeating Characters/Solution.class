@@ -1,0 +1,25 @@
+/*题目要求找字符场中最长的非重复子字符串的长度，容易想到遍历数组算出从当前位置到第一个不同字符的长度flag，在从下一个位置重复上一步，找出最大的一个flag，
+记下来输出即是本题结果。
+*/
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        char[] sArr=s.toCharArray();
+        int flag=1,max=0;
+        for(int i=0;i<s.length();i++)
+        {
+            for(int j=i+1;j<s.length()-1;j++)
+            {
+                if(sArr[i]!=sArr[j])
+                    flag++;
+                else
+                    break;
+            }
+            if(max<flag)
+            {
+                max=flag;
+            }
+            flag=1;
+        } 
+        return max;
+    }
+}
