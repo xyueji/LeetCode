@@ -1,25 +1,17 @@
-/*题目要求找字符场中最长的非重复子字符串的长度，容易想到遍历数组算出从当前位置到第一个不同字符的长度flag，在从下一个位置重复上一步，找出最大的一个flag，
-记下来输出即是本题结果。
+/*采用HashMap，边对HashMap赋值，边查找是否有相同的字符，并记录下最大的不同字符个数，其中把value赋值为相应字符下标的加1，目的是为了如果碰到相同的字符时，
+让起始位置向后移一位。不同字符的子字符串的长度为：j-i+1，取最大值的方法为Math.max()。
 */
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        char[] sArr=s.toCharArray();
-        int flag=1,max=0;
-        for(int i=0;i<s.length();i++)
-        {
-            for(int j=i+1;j<s.length()-1;j++)
-            {
-                if(sArr[i]!=sArr[j])
-                    flag++;
-                else
-                    break;
+        Map<Character,Integer> map=new HashMap<>(); 
+        int count=0;
+        for(int i=0,j=0;j<s.length();j++){
+            if(map.containsKey(s.charAt(j))){
+                i=Math.max(map.get(s.charAt(j)),i);
             }
-            if(max<flag)
-            {
-                max=flag;
-            }
-            flag=1;
-        } 
-        return max;
+            count=Math.max(count,j-i+1);
+            map.put(s.charAt(j),j+1);
+        }
+        return count;
     }
 }
